@@ -1,0 +1,5 @@
+# Ignore .env file and .env.* files
+# Also ignore bot-env folder and pycache
+.env*
+bot-env/
+__pycache__/
