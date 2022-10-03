@@ -1,3 +1,4 @@
 py-cord
 aiosqlite
 python-dotenv
+easy_pil

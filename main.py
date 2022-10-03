@@ -8,6 +8,7 @@ load_dotenv()  # load all the variables from the env file
 bot = commands.Bot(command_prefix='!',
                    intents=discord.Intents.all())  # create a bot instance
 
+# load all the cogs
 cogs_list = [
     'help',
     'levels',
@@ -18,6 +19,7 @@ for cog in cogs_list:
     bot.load_extension(f'cogs.{cog}')
 
 
+# this is the event that runs when the bot is ready
 @bot.event
 async def on_ready():
     print(f"{bot.user} is ready and online!")
@@ -28,6 +30,8 @@ async def on_ready():
         await bot.db.commit()
 
 
+# TO BE REWRITTEN
+# Help command temporarily taken from the pycord docs
 class SupremeHelpCommand(commands.HelpCommand):
     def get_command_signature(self, command):
         return '%s%s %s' % (self.context.clean_prefix, command.qualified_name, command.signature)
