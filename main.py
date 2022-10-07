@@ -8,14 +8,16 @@ load_dotenv()  # load all the variables from the env file
 bot = commands.Bot(command_prefix='!',
                    intents=discord.Intents.all())  # create a bot instance
 
-# load all the cogs
 cogs_list = [
     'help',
     'levels',
     'verification',
+    'settings',
+    'leader',
 ]
 
 for cog in cogs_list:
+    print(f'Loading {cog}...')
     bot.load_extension(f'cogs.{cog}')
 
 
@@ -23,10 +25,21 @@ for cog in cogs_list:
 @bot.event
 async def on_ready():
     print(f"{bot.user} is ready and online!")
-    setattr(bot, 'db', await aiosqlite.connect('db/levels.db'))
+    setattr(bot, 'db', await aiosqlite.connect('db/data.db'))
     async with bot.db.cursor() as cursor:
         await cursor.execute(
             "CREATE TABLE IF NOT EXISTS levels (user_id INTEGER, xp INTEGER, level INTEGER)")
+        await cursor.execute(
+            "CREATE TABLE IF NOT EXISTS verification (user_id INTEGER, channel_id INTEGER, verified BOOLEAN, name TEXT, birthdate TEXT, class TEXT)")
+        await cursor.execute(
+            "CREATE TABLE IF NOT EXISTS settings (guild_id INTEGER, verification_category_id INTEGER, citizen_role_id INTEGER, elections_channel_id INTEGER, announcements_channel_id INTEGER, leader_role_id INTEGER, leader_ideology TEXT, elections_message_id INTEGER, elections_buttons_message_id INTEGER)")
+        # Elections table
+        await cursor.execute(
+            "CREATE TABLE IF NOT EXISTS elections (id INTEGER, embed TEXT)")
+        await cursor.execute(
+            "CREATE TABLE IF NOT EXISTS candidates (id INTEGER, user_id INTEGER, guild_id INTEGER, ideology TEXT, votes INTEGER)")
+        await cursor.execute(
+            "CREATE TABLE IF NOT EXISTS votes (id INTEGER, user_id INTEGER, candidate_id INTEGER)")
         await bot.db.commit()
 
 

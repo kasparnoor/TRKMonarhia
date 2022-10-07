@@ -1,3 +1,11 @@
 {
-  "server_id": "1026162062403059712"
+  "guild_id": 1026162062403059712,
+  "verification_category_id": 1026433537026564156,
+  "citizen_role_id": 1026439454275145728,
+  "elections_channel_id": 1026510650144477214,
+  "announcements_channel_id": 1026510961718329435,
+  "leader_role_id": 1026525566226153633,
+  "leader_ideology": "",
+  "elections_message_id": "",
+  "elections_button_message_id": ""
 }
